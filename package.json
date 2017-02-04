@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --watch --out-file dist/bundle.js",
-    "build2": "webpack",
+    "build": "webpack",
+    "dev": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,8 +17,9 @@
     "babel-loader": "^6.2.10",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
-    "babel-preset-es2017": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.16.0",
+    "uglifyjs-webpack-plugin": "^0.1.3",
     "webpack": "^2.2.1"
   },
   "dependencies": {

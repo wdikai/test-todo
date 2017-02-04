@@ -1,8 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const env = process.env.NODE_ENV;
+
+const plugins = env !== 'dev'
+    ? [new UglifyJSPlugin()]
+    : [];
 
 module.exports = {
-    watch: true,
+    watch: env === 'dev',
     entry: './src/app.jsx',
     output: {
         path: './dist',
@@ -20,17 +26,5 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new webpack
-            .optimize
-            .DedupePlugin(),
-        new webpack
-            .optimize
-            .UglifyJsPlugin({
-                compress: {
-                    warnings: false
-                }
-            }),
-        new webpack.HotModuleReplacementPlugin()
-    ]
+    plugins: [...plugins]
 };
