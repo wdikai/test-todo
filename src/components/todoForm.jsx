@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import type {EventHandlerType}
+from '../flow-types';
 
 export default function TodoForm(props) {
-    let title;
-    let onSubmit = (e) => {
+    let title: HTMLElement;
+    let onSubmit : EventHandlerType = (e) => {
         e.preventDefault();
         props.onSubmit(title.value);
         title.value = '';
@@ -11,9 +13,7 @@ export default function TodoForm(props) {
 
     return (
         <section className="row">
-            <form
-                className="form-group col-xs-12"
-                onSubmit={onSubmit}>
+            <form className="form-group col-xs-12" onSubmit={onSubmit}>
                 <label htmlFor="title">
                     Title:
                 </label>
@@ -22,7 +22,7 @@ export default function TodoForm(props) {
                     <input
                         id="title"
                         type="text"
-                        ref={(input) => title = input}
+                        ref={(input : HTMLElement) => title = input}
                         className="form-control"
                         placeholder="Enter title"/>
 

@@ -3,7 +3,17 @@ import ReactDOM from 'react-dom';
 import TodoForm from './todoForm';
 import TodoList from './todoList';
 
+import type {TodoType}
+from '../flow-types';
+
+type PropsType = {
+    todos: TodoType[]
+};
+
 export default class TodoApp extends React.Component {
+    props : PropsType;
+    state : PropsType;
+
     constructor(props) {
         super(props);
 
@@ -24,8 +34,12 @@ export default class TodoApp extends React.Component {
             .bind(this);
     }
 
-    onCreateTodo(title) {
-        if (!title) {
+    get completed() : number {
+        return(this.state.todos.filter((todo : TodoType) => todo.isChecked)).length;
+    }
+
+    onCreateTodo(title : string) : void {
+        if(!title.length) {
             return;
         }
 
@@ -39,31 +53,29 @@ export default class TodoApp extends React.Component {
         });
     }
 
-    onToogleTodo(index) {
-        if (index < 0 || index >= this.state.length) {
+    onToogleTodo(index : number) : void {
+        if(index < 0 || index >= this.state.length) {
             return;
         }
 
         let todos = [...this.state.todos];
         todos[index] = Object.assign({}, todos[index], {
             isChecked: !todos[index].isChecked
-        })
+        });
 
         this.setState({todos});
     }
 
-    onRemoveTodo(index) {
-        if (index < 0) {
+    onRemoveTodo(index : number) : void {
+        if(index < 0 || index >= this.state.length) {
             return;
         }
-
-        console.log('remove', index)
 
         this.setState({
             todos: this
                 .state
                 .todos
-                .filter((todo, position) => index !== position)
+                .filter((todo : TodoType, position : number) => index !== position)
         });
     }
 
@@ -72,14 +84,16 @@ export default class TodoApp extends React.Component {
             <div className="container">
                 <TodoForm onSubmit={this.onCreateTodo}/>
                 <hr/>
-                <TodoList todos={this.state.todos} onToogle={this.onToogleTodo} onRemove={this.onRemoveTodo}/>
+                <TodoList
+                    todos={this.state.todos}
+                    onToogle={this.onToogleTodo}
+                    onRemove={this.onRemoveTodo}/>
+                <span className="pull-right">
+                    Compleated todos: {this.completed !== this.state.todos.length
+                        ? this.completed + '/' + this.state.todos.length
+                        : 'all'}
+                </span>
             </div>
         );
     }
 }
-
-TodoApp.propTypes = {
-    todos: React
-        .PropTypes
-        .arrayOf(React.PropTypes.shape({isChecked: React.PropTypes.bool.isRequired, title: React.PropTypes.string.isRequired}))
-};

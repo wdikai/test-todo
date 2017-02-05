@@ -1,21 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const env = process.env.NODE_ENV;
-
-const plugins = env !== 'dev'
-    ? [new UglifyJSPlugin()]
-    : [];
 
 module.exports = {
-    watch: env === 'dev',
-    entry: './src/app.jsx',
+    watch: true,
+    entry: './src/app.js',
     output: {
         path: './dist',
         filename: 'app.bundle.js'
     },
     resolve: {
-        extensions: ['.jsx', '.js']
+        extensions: ['.jsx', '.js'] 
     },
     module: {
         loaders: [
@@ -25,6 +19,5 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
-    },
-    plugins: [...plugins]
+    }
 };

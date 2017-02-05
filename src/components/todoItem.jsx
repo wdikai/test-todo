@@ -7,7 +7,7 @@ export default function TodoItem(props) {
             <input
                 type="checkbox"
                 checked={props.isChecked}
-                onChange={() => props.onToogle()}/>
+                onChange={props.onToogle}/>
             <span
                 style={{
                 "textDecoration": props.isChecked
